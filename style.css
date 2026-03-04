@@ -251,13 +251,40 @@ body:hover .cursor { opacity: 1; }
   justify-content: space-between;
   padding: 20px 48px;
   transition: var(--transition);
+  background: linear-gradient(180deg, rgba(5,8,22,0.45) 0%, rgba(5,8,22,0) 100%);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 .navbar.scrolled {
   padding: 14px 48px;
   background: rgba(5, 8, 22, 0.85);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(124,58,237,0.15);
   box-shadow: 0 4px 32px rgba(0,0,0,0.3);
+}
+
+/* ---- Nav animated scroll line ---- */
+.nav-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: rgba(124, 58, 237, 0.18); /* dim persistent base — always visible */
+  pointer-events: none;
+  overflow: hidden;
+}
+.nav-line-fill {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #0ea5e9 0%, #7c3aed 50%, #d946ef 100%);
+  box-shadow: 0 0 10px rgba(124,58,237,0.8), 0 0 20px rgba(14,165,233,0.45);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
 }
 .nav-logo {
   font-family: var(--font-display);
@@ -412,7 +439,12 @@ body:hover .cursor { opacity: 1; }
 }
 @keyframes lineGrow { from { width: 0; } to { width: 100%; } }
 
-.typed-wrapper { }
+.typed-wrapper {
+  display: inline-block;
+  min-height: 1.15em;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
 .typed-accent {
   background: linear-gradient(135deg, var(--primary-light), var(--accent-light));
   -webkit-background-clip: text;
@@ -464,8 +496,8 @@ body:hover .cursor { opacity: 1; }
 /* ---- Hero Visual / 3D Card ---- */
 .hero-visual { flex-shrink: 0; }
 .hero-card-3d {
-  width: 380px;
-  height: 420px;
+  width: 420px;
+  height: 450px;
   perspective: 1000px;
   cursor: none;
 }
@@ -496,13 +528,13 @@ body:hover .cursor { opacity: 1; }
 .hero-card-3d:hover .card-inner::before { opacity: 1; }
 
 .avatar-ring {
-  width: 220px;
-  height: 220px;
+  width: 285px;
+  height: 285px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--primary), var(--accent));
-  padding: 4px;
+  padding: 5px;
   animation: float 4s ease-in-out infinite;
-  box-shadow: 0 0 60px rgba(124,58,237,0.4);
+  box-shadow: 0 0 80px rgba(124,58,237,0.65), 0 0 40px rgba(6,182,212,0.35), 0 0 120px rgba(124,58,237,0.2);
 }
 @keyframes float {
   0%, 100% { transform: translateY(0px); }

@@ -810,10 +810,39 @@ function startHeroAnimations() {
   var links     = document.querySelectorAll('.nav-link');
 
   /* scroll: shrink + active link */
-  window.addEventListener('scroll', function () {
-    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 60);
+  var lastScrollY = window.scrollY;
+  var navLineFill = document.getElementById('navLineFill');
 
-    var scrollPos = window.scrollY + 90;
+  /* --- Scroll-progress line via RAF ---
+     scaleX maps directly to scrollY / maxScroll:
+       scroll down → scaleX grows  (line fills left→right)
+       scroll up   → scaleX shrinks (line empties right→left)
+       idle        → current scaleX holds exactly
+  ----------------------------------------------------------------*/
+  var nlCurrent = 0;
+  var nlTarget  = 0;
+  function getScrollProgress() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    return max > 0 ? Math.max(0, Math.min(1, window.scrollY / max)) : 0;
+  }
+  (function nlRaf() {
+    nlTarget   = getScrollProgress();
+    var diff   = nlTarget - nlCurrent;
+    /* lerp: fast enough to feel live, smooth enough to avoid jitter */
+    nlCurrent += diff * 0.10;
+    if (Math.abs(diff) < 0.0004) nlCurrent = nlTarget; /* snap when idle */
+    if (navLineFill) navLineFill.style.transform = 'scaleX(' + nlCurrent + ')';
+    requestAnimationFrame(nlRaf);
+  }());
+
+  window.addEventListener('scroll', function () {
+    var currentY  = window.scrollY;
+    var goingDown = currentY > lastScrollY;
+    lastScrollY   = currentY;
+
+    if (navbar) navbar.classList.toggle('scrolled', currentY > 60);
+
+    var scrollPos = currentY + 90;
     links.forEach(function (link) {
       var sec = document.querySelector(link.getAttribute('href'));
       if (sec && sec.offsetTop <= scrollPos && sec.offsetTop + sec.offsetHeight > scrollPos) {
@@ -824,7 +853,7 @@ function startHeroAnimations() {
 
     /* back-to-top */
     var btn = document.getElementById('backToTop');
-    if (btn) btn.classList.toggle('visible', window.scrollY > 400);
+    if (btn) btn.classList.toggle('visible', currentY > 400);
   });
 
   /* hamburger toggle */

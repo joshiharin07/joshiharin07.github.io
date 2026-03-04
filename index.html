@@ -34,18 +34,26 @@
         <svg class="hj-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Harin Joshi">
           <defs>
             <linearGradient id="hjGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-              <stop offset="0%"   stop-color="#06f0d8"/>
-              <stop offset="55%"  stop-color="#818cf8"/>
-              <stop offset="100%" stop-color="#d946ef"/>
+              <stop offset="0%"   stop-color="#0ea5e9"/>
+              <stop offset="100%" stop-color="#7c3aed"/>
+            </linearGradient>
+            <linearGradient id="hjGradBg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+              <stop offset="0%"   stop-color="#0ea5e9" stop-opacity="0.12"/>
+              <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.12"/>
             </linearGradient>
           </defs>
-          <!-- H -->
-          <rect x="4"  y="8"  width="5" height="32" rx="2" fill="url(#hjGrad)"/>
-          <rect x="4"  y="22" width="16" height="5"  rx="2" fill="url(#hjGrad)"/>
-          <rect x="15" y="8"  width="5" height="32" rx="2" fill="url(#hjGrad)"/>
-          <!-- J -->
-          <rect x="29" y="8"  width="5"  height="26" rx="2" fill="url(#hjGrad)"/>
-          <path d="M24 34 Q24 40 31.5 40 Q39 40 39 33 L39 8 L34 8 L34 33 Q34 36 31.5 36 Q29 36 29 34 Z" fill="url(#hjGrad)"/>
+          <!-- Container -->
+          <rect x="1" y="1" width="46" height="46" rx="12" fill="url(#hjGradBg)" stroke="url(#hjGrad)" stroke-width="1"/>
+          <!-- H left stem -->
+          <rect x="8" y="11" width="4" height="26" rx="2" fill="url(#hjGrad)"/>
+          <!-- H right stem -->
+          <rect x="18" y="11" width="4" height="26" rx="2" fill="url(#hjGrad)"/>
+          <!-- H crossbar -->
+          <rect x="8" y="21" width="14" height="4" rx="2" fill="url(#hjGrad)"/>
+          <!-- J stem -->
+          <rect x="30" y="11" width="4" height="21" rx="2" fill="url(#hjGrad)"/>
+          <!-- J curve -->
+          <path d="M34 30 Q34 39 26.5 39 Q23 39 22 37.5" stroke="url(#hjGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
         </svg>
         <span class="nav-logo-name">Harin Joshi</span>
       </a>
@@ -62,6 +70,7 @@
     <div class="hamburger" id="hamburger">
       <span></span><span></span><span></span>
     </div>
+    <div class="nav-line" id="navLine"><div class="nav-line-fill" id="navLineFill"></div></div>
   </nav>
 
   <!-- ===== HERO SECTION ===== -->
@@ -115,18 +124,6 @@
             <div class="avatar-img">
               <img src="images/profile.jpg" alt="Harin Joshi" id="heroAvatar" />
             </div>
-          </div>
-          <div class="floating-badge fb-react">
-            <i class="fa-brands fa-react"></i> React
-          </div>
-          <div class="floating-badge fb-node">
-            <i class="fa-brands fa-node-js"></i> Node.js
-          </div>
-          <div class="floating-badge fb-python">
-            <i class="fa-brands fa-python"></i> Python
-          </div>
-          <div class="floating-badge fb-star">
-            <i class="fa-solid fa-star"></i> 4.9/5
           </div>
         </div>
       </div>
@@ -737,16 +734,20 @@
                 <svg class="hj-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <defs>
                     <linearGradient id="hjGradF" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%"   stop-color="#06f0d8"/>
-                      <stop offset="55%"  stop-color="#818cf8"/>
-                      <stop offset="100%" stop-color="#d946ef"/>
+                      <stop offset="0%"   stop-color="#0ea5e9"/>
+                      <stop offset="100%" stop-color="#7c3aed"/>
+                    </linearGradient>
+                    <linearGradient id="hjGradFBg" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%"   stop-color="#0ea5e9" stop-opacity="0.12"/>
+                      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.12"/>
                     </linearGradient>
                   </defs>
-                  <rect x="4"  y="8"  width="5" height="32" rx="2" fill="url(#hjGradF)"/>
-                  <rect x="4"  y="22" width="16" height="5"  rx="2" fill="url(#hjGradF)"/>
-                  <rect x="15" y="8"  width="5" height="32" rx="2" fill="url(#hjGradF)"/>
-                  <rect x="29" y="8"  width="5"  height="26" rx="2" fill="url(#hjGradF)"/>
-                  <path d="M24 34 Q24 40 31.5 40 Q39 40 39 33 L39 8 L34 8 L34 33 Q34 36 31.5 36 Q29 36 29 34 Z" fill="url(#hjGradF)"/>
+                  <rect x="1" y="1" width="46" height="46" rx="12" fill="url(#hjGradFBg)" stroke="url(#hjGradF)" stroke-width="1"/>
+                  <rect x="8" y="11" width="4" height="26" rx="2" fill="url(#hjGradF)"/>
+                  <rect x="18" y="11" width="4" height="26" rx="2" fill="url(#hjGradF)"/>
+                  <rect x="8" y="21" width="14" height="4" rx="2" fill="url(#hjGradF)"/>
+                  <rect x="30" y="11" width="4" height="21" rx="2" fill="url(#hjGradF)"/>
+                  <path d="M34 30 Q34 39 26.5 39 Q23 39 22 37.5" stroke="url(#hjGradF)" stroke-width="4" fill="none" stroke-linecap="round"/>
                 </svg>
                 <span class="nav-logo-name">Harin Joshi</span>
               </a>

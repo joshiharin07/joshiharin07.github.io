@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Harin Joshi | Full-Stack Developer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursorFollower"></div>
+
+  <!-- Canvas for Three.js -->
+  <canvas id="bg-canvas"></canvas>
+
+  <!-- Loader: Car Drive -->
+  <div class="loader" id="loader">
+    <canvas id="carCanvas"></canvas>
+    <div class="car-counter">
+      <span id="sgPctNum">000</span><span class="car-pct-sym">%</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <a href="#home">
+        <svg class="hj-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Harin Joshi">
+          <defs>
+            <linearGradient id="hjGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+              <stop offset="0%"   stop-color="#06f0d8"/>
+              <stop offset="55%"  stop-color="#818cf8"/>
+              <stop offset="100%" stop-color="#d946ef"/>
+            </linearGradient>
+          </defs>
+          <!-- H -->
+          <rect x="4"  y="8"  width="5" height="32" rx="2" fill="url(#hjGrad)"/>
+          <rect x="4"  y="22" width="16" height="5"  rx="2" fill="url(#hjGrad)"/>
+          <rect x="15" y="8"  width="5" height="32" rx="2" fill="url(#hjGrad)"/>
+          <!-- J -->
+          <rect x="29" y="8"  width="5"  height="26" rx="2" fill="url(#hjGrad)"/>
+          <path d="M24 34 Q24 40 31.5 40 Q39 40 39 33 L39 8 L34 8 L34 33 Q34 36 31.5 36 Q29 36 29 34 Z" fill="url(#hjGrad)"/>
+        </svg>
+        <span class="nav-logo-name">Harin Joshi</span>
+      </a>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="nav-link active">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#experience" class="nav-link">Experience</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Hire Me</a>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-badge reveal-up">
+        <span class="badge-dot"></span>
+        Available for work
+      </div>
+      <h1 class="hero-title reveal-up">
+        <span class="title-line">Hi, I'm</span>
+        <span class="title-name" id="heroName">Harin</span>
+        <span class="title-line">
+          <span class="typed-wrapper">I build <span id="typed-text" class="typed-accent"></span><span class="typed-cursor">|</span></span>
+        </span>
+      </h1>
+      <p class="hero-desc reveal-up">
+        A passionate Full-Stack Developer crafting high-performance digital experiences with clean code, modern design, and cutting-edge technologies.
+      </p>
+      <div class="hero-actions reveal-up">
+        <a href="#projects" class="btn btn-primary">
+          <span>View My Work</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        <a href="#contact" class="btn btn-secondary">
+          <span>Let's Talk</span>
+          <i class="fa-solid fa-paper-plane"></i>
+        </a>
+      </div>
+      <div class="hero-stats reveal-up">
+        <div class="stat">
+          <span class="stat-num" data-count="12">0</span><span class="stat-plus">+</span>
+          <span class="stat-label">Projects Done</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-count="2">0</span><span class="stat-plus">+</span>
+          <span class="stat-label">Years Exp.</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num" data-count="5">0</span><span class="stat-plus">+</span>
+          <span class="stat-label">Collaborations</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-3d" id="heroCard">
+        <div class="card-inner">
+          <div class="avatar-ring">
+            <div class="avatar-img">
+              <img src="images/profile.jpg" alt="Harin Joshi" id="heroAvatar" />
+            </div>
+          </div>
+          <div class="floating-badge fb-react">
+            <i class="fa-brands fa-react"></i> React
+          </div>
+          <div class="floating-badge fb-node">
+            <i class="fa-brands fa-node-js"></i> Node.js
+          </div>
+          <div class="floating-badge fb-python">
+            <i class="fa-brands fa-python"></i> Python
+          </div>
+          <div class="floating-badge fb-star">
+            <i class="fa-solid fa-star"></i> 4.9/5
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-mouse">
+        <div class="scroll-wheel"></div>
+      </div>
+      <span>Scroll Down</span>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT SECTION ===== -->
+  <section class="about section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">About Me</span>
+        <h2 class="section-title reveal-up">Crafting Digital <span class="accent">Masterpieces</span></h2>
+        <p class="section-subtitle reveal-up">Get to know the person behind the code</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-visual reveal-left">
+          <div class="about-img-wrapper">
+            <div class="about-img-card">
+              <img src="images/profile.jpg" alt="Harin Joshi" class="about-profile-img" />
+              <div class="img-overlay">
+                <span>Open to Opportunities</span>
+              </div>
+            </div>
+            <div class="about-exp-badge">
+              <span class="exp-num">2+</span>
+              <span class="exp-label">Years of<br/>Experience</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-content reveal-right">
+          <h3 class="about-heading">Full-Stack Developer & Product Builder</h3>
+          <p class="about-text">
+            I'm <strong>Harin Joshi</strong>, a Full-Stack Developer skilled in modern web technologies, backend systems, and IoT integration. Dedicated to creating efficient, scalable, and secure digital products.
+          </p>
+          <p class="about-text">
+            I focus on building production-ready solutions — from real-time web platforms and RESTful APIs to IoT-connected systems — combining clean architecture with practical problem solving.
+          </p>
+          <div class="about-details">
+            <div class="detail-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <span>Ahmedabad, Gujarat, India</span>
+            </div>
+            <div class="detail-item">
+              <i class="fa-solid fa-envelope"></i>
+              <span>harinjoshiofficial@gmail.com</span>
+            </div>
+            <div class="detail-item">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <span>B.E. Computer Engineering</span>
+            </div>
+            <div class="detail-item">
+              <i class="fa-solid fa-briefcase"></i>
+              <span>Freelance &amp; Open to Opportunities</span>
+            </div>
+          </div>
+          <div class="about-actions">
+            <a href="#" class="btn btn-primary">
+              <i class="fa-solid fa-download"></i>
+              Download CV
+            </a>
+            <div class="social-links">
+              <a href="https://github.com/joshiharin07" class="social-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i></a>
+              <a href="https://www.linkedin.com/in/harin-joshi-2081b1323" class="social-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i></a>
+              <a href="https://x.com/HARINJOSHI99123" class="social-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-twitter"></i></a>
+              <a href="#" class="social-btn"><i class="fa-brands fa-dribbble"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS SECTION ===== -->
+  <section class="skills section" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">Tech Stack</span>
+        <h2 class="section-title reveal-up">Skills & <span class="accent">Expertise</span></h2>
+        <p class="section-subtitle reveal-up">Technologies I work with to build amazing products</p>
+      </div>
+      <div class="skills-tabs reveal-up">
+        <button class="tab-btn active" data-tab="frontend">Frontend</button>
+        <button class="tab-btn" data-tab="backend">Backend</button>
+        <button class="tab-btn" data-tab="tools">Tools & Others</button>
+      </div>
+      <div class="skills-panel active" id="tab-frontend">
+        <div class="skills-grid">
+          <div class="skill-card reveal-up" data-delay="0">
+            <div class="skill-icon" style="--c:#000"><i class="fa-brands fa-js"></i></div>
+            <span class="skill-name">Next.js</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="100">
+            <div class="skill-icon" style="--c:#61DBFB"><i class="fa-brands fa-react"></i></div>
+            <span class="skill-name">React</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="92"></div></div>
+            <span class="skill-pct">92%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="200">
+            <div class="skill-icon" style="--c:#3178c6"><i class="fa-brands fa-js"></i></div>
+            <span class="skill-name">TypeScript</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="300">
+            <div class="skill-icon" style="--c:#38bdf8"><i class="fa-solid fa-wind"></i></div>
+            <span class="skill-name">Tailwind CSS</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="94"></div></div>
+            <span class="skill-pct">94%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="400">
+            <div class="skill-icon" style="--c:#FF6B6B"><i class="fa-solid fa-cubes"></i></div>
+            <span class="skill-name">Three.js</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+            <span class="skill-pct">75%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="500">
+            <div class="skill-icon" style="--c:#9333ea"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <span class="skill-name">Framer Motion</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+            <span class="skill-pct">80%</span>
+          </div>
+        </div>
+      </div>
+      <div class="skills-panel" id="tab-backend">
+        <div class="skills-grid">
+          <div class="skill-card reveal-up" data-delay="0">
+            <div class="skill-icon" style="--c:#68a063"><i class="fa-brands fa-node-js"></i></div>
+            <span class="skill-name">Node.js</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
+            <span class="skill-pct">90%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="100">
+            <div class="skill-icon" style="--c:#3572A5"><i class="fa-brands fa-python"></i></div>
+            <span class="skill-name">Python</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="72"></div></div>
+            <span class="skill-pct">72%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="200">
+            <div class="skill-icon" style="--c:#444"><i class="fa-solid fa-server"></i></div>
+            <span class="skill-name">Express.js</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="88"></div></div>
+            <span class="skill-pct">88%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="300">
+            <div class="skill-icon" style="--c:#336791"><i class="fa-solid fa-database"></i></div>
+            <span class="skill-name">PostgreSQL</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="82"></div></div>
+            <span class="skill-pct">82%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="400">
+            <div class="skill-icon" style="--c:#47A248"><i class="fa-solid fa-database"></i></div>
+            <span class="skill-name">MongoDB</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="87"></div></div>
+            <span class="skill-pct">87%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="500">
+            <div class="skill-icon" style="--c:#2D3748"><i class="fa-solid fa-layer-group"></i></div>
+            <span class="skill-name">Prisma ORM</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="80"></div></div>
+            <span class="skill-pct">80%</span>
+          </div>
+        </div>
+      </div>
+      <div class="skills-panel" id="tab-tools">
+        <div class="skills-grid">
+          <div class="skill-card reveal-up" data-delay="0">
+            <div class="skill-icon" style="--c:#F05032"><i class="fa-brands fa-git-alt"></i></div>
+            <span class="skill-name">Git & GitHub</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="68"></div></div>
+            <span class="skill-pct">68%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="100">
+            <div class="skill-icon" style="--c:#2496ED"><i class="fa-brands fa-docker"></i></div>
+            <span class="skill-name">Docker</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="75"></div></div>
+            <span class="skill-pct">75%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="200">
+            <div class="skill-icon" style="--c:#FF9900"><i class="fa-brands fa-aws"></i></div>
+            <span class="skill-name">AWS</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
+            <span class="skill-pct">70%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="300">
+            <div class="skill-icon" style="--c:#F24E1E"><i class="fa-solid fa-pen-ruler"></i></div>
+            <span class="skill-name">Figma</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="400">
+            <div class="skill-icon" style="--c:#3ECF8E"><i class="fa-solid fa-bolt"></i></div>
+            <span class="skill-name">Supabase</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="89"></div></div>
+            <span class="skill-pct">89%</span>
+          </div>
+          <div class="skill-card reveal-up" data-delay="500">
+            <div class="skill-icon" style="--c:#eee"><i class="fa-solid fa-cloud"></i></div>
+            <span class="skill-name">Vercel</span>
+            <div class="skill-bar"><div class="skill-fill" data-width="82"></div></div>
+            <span class="skill-pct">82%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS SECTION ===== -->
+  <section class="projects section" id="projects">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">Portfolio</span>
+        <h2 class="section-title reveal-up">Featured <span class="accent">Projects</span></h2>
+        <p class="section-subtitle reveal-up">A selection of my recent work and personal projects</p>
+      </div>
+      <div class="projects-filter reveal-up">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="web">Web App</button>
+        <button class="filter-btn" data-filter="mobile">Mobile</button>
+        <button class="filter-btn" data-filter="ai">AI/ML</button>
+      </div>
+      <div class="projects-grid">
+
+        <div class="project-card reveal-up featured" data-category="ai" data-delay="0">
+          <div class="project-featured-badge">Featured</div>
+          <div class="project-img">
+            <div class="project-img-placeholder" style="--bg: linear-gradient(135deg,#0f2027,#2c5364)">
+              <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div class="project-overlay">
+              <a href="#" class="proj-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+              <a href="#" class="proj-link"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="project-category">IoT</span>
+            <h3 class="project-title">IoT Wireless Charging Station</h3>
+            <p class="project-desc">Smart wireless charging system with real-time energy monitoring and remote access control.</p>
+            <div class="project-tags">
+              <span>IoT</span><span>Sensors</span><span>Cloud</span><span>Node.js</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal-up" data-category="web" data-delay="100">
+          <div class="project-img">
+            <div class="project-img-placeholder" style="--bg: linear-gradient(135deg,#1a0533,#c0392b)">
+              <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <div class="project-overlay">
+              <a href="#" class="proj-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+              <a href="#" class="proj-link"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="project-category">Web App</span>
+            <h3 class="project-title">Cyber Incident Real-Time Tracker</h3>
+            <p class="project-desc">Platform providing live feeds and structured insights on cyber incidents related to Indian cyberspace.</p>
+            <div class="project-tags">
+              <span>Next.js</span><span>TypeScript</span><span>Prisma</span><span>PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal-up" data-category="web" data-delay="200">
+          <div class="project-img">
+            <div class="project-img-placeholder" style="--bg: linear-gradient(135deg,#1a237e,#0288d1)">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div class="project-overlay">
+              <a href="#" class="proj-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+              <a href="#" class="proj-link"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="project-category">Web App</span>
+            <h3 class="project-title">Campus Task Management Module</h3>
+            <p class="project-desc">Production-ready task management system with role-based assignments, status tracking, and audit logs.</p>
+            <div class="project-tags">
+              <span>Node.js</span><span>Prisma ORM</span><span>PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal-up" data-category="web" data-delay="300">
+          <div class="project-img">
+            <div class="project-img-placeholder" style="--bg: linear-gradient(135deg,#667eea,#764ba2)">
+              <i class="fa-solid fa-briefcase"></i>
+            </div>
+            <div class="project-overlay">
+              <a href="#" class="proj-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+              <a href="#" class="proj-link"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="project-category">Web App</span>
+            <h3 class="project-title">Personal Developer Portfolio</h3>
+            <p class="project-desc">Modern responsive portfolio showcasing projects, skills, and technical expertise with multilingual support.</p>
+            <div class="project-tags">
+              <span>React</span><span>Tailwind</span><span>TypeScript</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card reveal-up" data-category="ai" data-delay="400">
+          <div class="project-img">
+            <div class="project-img-placeholder" style="--bg: linear-gradient(135deg,#f093fb,#f5576c)">
+              <i class="fa-solid fa-robot"></i>
+            </div>
+            <div class="project-overlay">
+              <a href="#" class="proj-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+              <a href="#" class="proj-link"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-info">
+            <span class="project-category">AI</span>
+            <h3 class="project-title">AI Utility Tools</h3>
+            <p class="project-desc">Collection of small AI-powered utilities for automation and smart content generation.</p>
+            <div class="project-tags">
+              <span>OpenAI API</span><span>JavaScript</span><span>REST APIs</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE SECTION ===== -->
+  <section class="experience section" id="experience">
+    <!-- Particle canvas for this section -->
+    <canvas class="exp-canvas" id="expCanvas"></canvas>
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">Journey</span>
+        <h2 class="section-title reveal-up">Work <span class="accent">Experience</span></h2>
+        <p class="section-subtitle reveal-up">My professional journey and key milestones</p>
+      </div>
+
+      <!-- Animated SVG line that draws itself -->
+      <div class="timeline" id="timeline">
+        <svg class="tl-line-svg" id="tlLineSvg" aria-hidden="true">
+          <defs>
+            <linearGradient id="tlLineGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%"   stop-color="#7c3aed"/>
+              <stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+          </defs>
+          <line class="tl-line-track" x1="50%" y1="0" x2="50%" y2="100%"/>
+          <line class="tl-line-fill"  id="tlLineFill" x1="50%" y1="0" x2="50%" y2="0"/>
+        </svg>
+
+        <!-- ── ITEM 1 ── -->
+        <div class="timeline-item tl-ani" data-side="left" data-index="0">
+          <div class="timeline-dot">
+            <span class="dot-ring r1"></span>
+            <span class="dot-ring r2"></span>
+            <span class="dot-core"></span>
+          </div>
+          <div class="timeline-content">
+            <div class="tl-step">01</div>
+            <div class="tl-header">
+              <div>
+                <h3 class="tl-title">Founder &amp; Product Developer</h3>
+                <span class="tl-company"><i class="fa-solid fa-rocket"></i> Independent Tech Projects</span>
+              </div>
+              <span class="tl-date"><i class="fa-regular fa-calendar"></i> 2024 – Present</span>
+            </div>
+            <p class="tl-desc">Building scalable web platforms, backend systems, and IoT-driven solutions with a focus on real-time architecture, security, and production-ready deployments.</p>
+            <div class="tl-metrics">
+              <div class="tl-metric"><span class="tl-metric-num" data-count="5">0</span><span>+</span><small>Products Built</small></div>
+              <div class="tl-metric"><span class="tl-metric-num" data-count="12">0</span><span>+</span><small>Systems Developed</small></div>
+              <div class="tl-metric"><span class="tl-metric-num" data-count="5">0</span><span>+</span><small>Live Deployments</small></div>
+            </div>
+            <div class="tl-tags">
+              <span>Next.js</span><span>TypeScript</span><span>Node.js</span><span>Prisma</span><span>PostgreSQL</span><span>IoT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ITEM 2 ── -->
+        <div class="timeline-item tl-ani" data-side="right" data-index="1">
+          <div class="timeline-dot">
+            <span class="dot-ring r1"></span>
+            <span class="dot-ring r2"></span>
+            <span class="dot-core"></span>
+          </div>
+          <div class="timeline-content">
+            <div class="tl-step">02</div>
+            <div class="tl-header">
+              <div>
+                <h3 class="tl-title">IoT Product Engineer</h3>
+                <span class="tl-company"><i class="fa-solid fa-microchip"></i> Research &amp; Academic Innovation</span>
+              </div>
+              <span class="tl-date"><i class="fa-regular fa-calendar"></i> 2025 – Present</span>
+            </div>
+            <p class="tl-desc">Designed and developed a smart IoT-based wireless charging station with real-time monitoring and cloud-connected energy optimization.</p>
+            <div class="tl-metrics">
+              <div class="tl-metric"><span class="tl-metric-num" data-count="4">0</span><span></span><small>IoT Integrations</small></div>
+              <div class="tl-metric"><span class="tl-metric-num" data-count="3">0</span><span></span><small>Real-Time Streams</small></div>
+              <div class="tl-metric"><span class="tl-metric-num" data-count="20">0</span><span>%+</span><small>Efficiency Gain</small></div>
+            </div>
+            <div class="tl-tags">
+              <span>IoT Sensors</span><span>Cloud Integration</span><span>Node.js</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── ITEM 3 ── -->
+        <div class="timeline-item tl-ani" data-side="left" data-index="2">
+          <div class="timeline-dot">
+            <span class="dot-ring r1"></span>
+            <span class="dot-ring r2"></span>
+            <span class="dot-core"></span>
+          </div>
+          <div class="timeline-content">
+            <div class="tl-step">03</div>
+            <div class="tl-header">
+              <div>
+                <h3 class="tl-title">Backend Systems Architect</h3>
+                <span class="tl-company"><i class="fa-solid fa-server"></i> Campus Platform Module</span>
+              </div>
+              <span class="tl-date"><i class="fa-regular fa-calendar"></i> 2026</span>
+            </div>
+            <p class="tl-desc">Engineered a role-based task management system with audit logging, relational database optimization, and secure API design.</p>
+            <div class="tl-metrics">
+              <div class="tl-metric"><span class="tl-metric-num" data-count="15">0</span><span>+</span><small>APIs Designed</small></div>
+              <div class="tl-metric"><span class="tl-metric-num" data-count="5">0</span><span></span><small>Role Flows</small></div>
+              <div class="tl-metric"><span class="tl-metric-num" data-count="0">0</span><span></span><small>Production Bugs</small></div>
+            </div>
+            <div class="tl-tags">
+              <span>Node.js</span><span>Prisma ORM</span><span>PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIALS SECTION ===== -->
+  <section class="testimonials section" id="testimonials">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">Testimonials</span>
+        <h2 class="section-title reveal-up">What Clients <span class="accent">Say</span></h2>
+      </div>
+      <div class="testimonials-slider reveal-up">
+        <div class="testimonials-track" id="testimonialsTrack">
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="testimonial-text">"Harin delivered an absolutely stunning e-commerce platform that exceeded all our expectations. The attention to detail and performance optimization was remarkable."</p>
+            <div class="testimonial-author">
+              <img src="https://i.pravatar.cc/150?img=47" alt="Alice Johnson" />
+              <div>
+                <span class="author-name">Alice Johnson</span>
+                <span class="author-role">CEO, RetailPro</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="testimonial-text">"Working with Harin was an incredible experience. He built our AI platform with robust architecture and delivered it ahead of schedule. Highly recommended!"</p>
+            <div class="testimonial-author">
+              <img src="https://i.pravatar.cc/150?img=12" alt="Bob Martinez" />
+              <div>
+                <span class="author-name">Bob Martinez</span>
+                <span class="author-role">CTO, AIStartup</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="testimonial-text">"Harin transformed our outdated website into a modern, high-performance application. The 3D animations and user experience improvements drove a 150% increase in engagement."</p>
+            <div class="testimonial-author">
+              <img src="https://i.pravatar.cc/150?img=32" alt="Sarah Chen" />
+              <div>
+                <span class="author-name">Sarah Chen</span>
+                <span class="author-role">Product Manager, MediaCo</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-stars">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            </div>
+            <p class="testimonial-text">"Harin's technical expertise and dedication are truly impressive. He delivered a robust, clean-coded solution well ahead of schedule. A highly professional developer I'd recommend without hesitation."</p>
+            <div class="testimonial-author">
+              <img src="images/kathan.jpg" alt="Kathan Joshi" />
+              <div>
+                <span class="author-name">Kathan Joshi</span>
+                <span class="author-role">Tech Lead, AIDTM</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="slider-controls">
+          <button class="slider-btn" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+          <div class="slider-dots" id="sliderDots"></div>
+          <button class="slider-btn" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT SECTION ===== -->
+  <section class="contact section" id="contact">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag reveal-up">Get In Touch</span>
+        <h2 class="section-title reveal-up">Let's Work <span class="accent">Together</span></h2>
+        <p class="section-subtitle reveal-up">Have a project in mind? I'd love to hear about it.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal-left">
+          <div class="contact-card">
+            <i class="fa-solid fa-envelope"></i>
+            <h4>Email</h4>
+            <p>harinjoshiofficial@gmail.com</p>
+            <a href="mailto:harinjoshiofficial@gmail.com">Send email →</a>
+          </div>
+          <div class="contact-card">
+            <i class="fa-solid fa-phone"></i>
+            <h4>Phone</h4>
+            <p>+91 9316228596</p>
+            <a href="tel:+919316228596">Call me →</a>
+          </div>
+          <div class="contact-card">
+            <i class="fa-solid fa-location-dot"></i>
+            <h4>Location</h4>
+            <p>Ahmedabad, Gujarat, India</p>
+            <a href="https://maps.app.goo.gl/ShC2zcz3zpZNPXnm9" target="_blank" rel="noopener noreferrer">View on map →</a>
+          </div>
+          <div class="contact-availability">
+            <div class="avail-dot"></div>
+            <span>Available for freelance projects</span>
+          </div>
+        </div>
+        <div class="contact-form-wrapper reveal-right">
+          <form class="contact-form" id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="John Doe" required />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" placeholder="john@example.com" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input type="text" id="subject" placeholder="Project Collaboration" required />
+            </div>
+            <div class="form-group">
+              <label for="budget">Budget Range</label>
+              <select id="budget">
+                <option value="">Select budget range</option>
+                <option value="small">$1,000 - $5,000</option>
+                <option value="medium">$5,000 - $15,000</option>
+                <option value="large">$15,000 - $50,000</option>
+                <option value="enterprise">$50,000+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">
+              <span>Send Message</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+            <div class="form-success" id="formSuccess">
+              <i class="fa-solid fa-circle-check"></i>
+              Message sent successfully! I'll get back to you soon.
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="nav-logo">
+              <a href="#home">
+                <svg class="hj-logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="hjGradF" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%"   stop-color="#06f0d8"/>
+                      <stop offset="55%"  stop-color="#818cf8"/>
+                      <stop offset="100%" stop-color="#d946ef"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="4"  y="8"  width="5" height="32" rx="2" fill="url(#hjGradF)"/>
+                  <rect x="4"  y="22" width="16" height="5"  rx="2" fill="url(#hjGradF)"/>
+                  <rect x="15" y="8"  width="5" height="32" rx="2" fill="url(#hjGradF)"/>
+                  <rect x="29" y="8"  width="5"  height="26" rx="2" fill="url(#hjGradF)"/>
+                  <path d="M24 34 Q24 40 31.5 40 Q39 40 39 33 L39 8 L34 8 L34 33 Q34 36 31.5 36 Q29 36 29 34 Z" fill="url(#hjGradF)"/>
+                </svg>
+                <span class="nav-logo-name">Harin Joshi</span>
+              </a>
+            </div>
+          <p>Crafting digital experiences that make a difference. Let's build something amazing together.</p>
+          <div class="social-links">
+            <a href="https://github.com/joshiharin07" class="social-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/harin-joshi-2081b1323" class="social-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://x.com/HARINJOSHI99123" class="social-btn" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#" class="social-btn"><i class="fa-brands fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="footer-links">
+          <h4>Navigation</h4>
+          <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Mobile Apps</a></li>
+            <li><a href="#">UI/UX Design</a></li>
+            <li><a href="#">AI Integration</a></li>
+            <li><a href="#">Consulting</a></li>
+          </ul>
+        </div>
+        <div class="footer-newsletter">
+          <h4>Stay Updated</h4>
+          <p>Subscribe to my newsletter for the latest tech insights.</p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="your@email.com" />
+            <button class="btn btn-primary">Subscribe</button>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Harin Joshi. All rights reserved. Made with <span class="heart">♥</span> and lots of coffee.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

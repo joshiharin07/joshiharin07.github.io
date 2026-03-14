@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy | Harin Joshi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #050816;
+      --surface:  #0d1224;
+      --border:   rgba(255,255,255,0.07);
+      --primary:  #0ea5e9;
+      --accent:   #7c3aed;
+      --text:     #e2e8f0;
+      --muted:    #94a3b8;
+      --radius:   12px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.75;
+      min-height: 100vh;
+    }
+
+    /* ── Top bar ── */
+    .top-bar {
+      background: rgba(13,18,36,0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .top-bar a {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, #0ea5e9, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+    .back-link {
+      font-size: 0.85rem !important;
+      font-family: 'Inter', sans-serif !important;
+      font-weight: 500 !important;
+      background: none !important;
+      -webkit-text-fill-color: var(--muted) !important;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--primary); -webkit-text-fill-color: var(--primary) !important; }
+
+    /* ── Hero ── */
+    .page-hero {
+      background: linear-gradient(135deg, rgba(14,165,233,0.08) 0%, rgba(124,58,237,0.08) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 64px 32px 48px;
+      text-align: center;
+    }
+    .page-hero .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: rgba(14,165,233,0.1);
+      border: 1px solid rgba(14,165,233,0.2);
+      border-radius: 100px;
+      padding: 6px 16px;
+      margin-bottom: 20px;
+    }
+    .page-hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .page-hero h1 span {
+      background: linear-gradient(135deg, #0ea5e9, #7c3aed);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-hero p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* ── Layout ── */
+    .content {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 56px 32px 80px;
+    }
+
+    /* ── Sections ── */
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px 40px;
+      margin-bottom: 24px;
+    }
+    .section h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section h2::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 20px;
+      background: linear-gradient(135deg, #0ea5e9, #7c3aed);
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .section p { color: var(--muted); font-size: 0.95rem; margin-bottom: 12px; }
+    .section p:last-child { margin-bottom: 0; }
+    .section ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 8px;
+    }
+    .section ul li {
+      color: var(--muted);
+      font-size: 0.95rem;
+      padding: 6px 0 6px 20px;
+      position: relative;
+    }
+    .section ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-size: 0.8rem;
+    }
+
+    /* ── Footer ── */
+    .page-footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 32px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .page-footer a { color: var(--primary); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .section { padding: 24px 20px; }
+      .content { padding: 32px 16px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-bar">
+    <a href="index.html">Harin Joshi</a>
+    <a href="index.html" class="back-link">← Back to Portfolio</a>
+  </header>
+
+  <div class="page-hero">
+    <span class="tag">Legal</span>
+    <h1>Privacy <span>Policy</span></h1>
+    <p>Last updated: March 2026 &nbsp;·&nbsp; Effective immediately</p>
+  </div>
+
+  <main class="content">
+
+    <div class="section">
+      <h2>Overview</h2>
+      <p>
+        This Privacy Policy applies to the personal developer portfolio website of <strong>Harin Joshi</strong>
+        (the "Site"). This Site is a static informational portfolio intended to showcase professional work,
+        skills, and contact information. It does not operate as a commercial service or application.
+      </p>
+      <p>
+        By accessing this Site, you acknowledge and accept the practices described in this policy.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Data Collection</h2>
+      <p>
+        This Site does not operate its own database or user account system. However, limited information
+        may be collected in the following ways:
+      </p>
+      <ul>
+        <li>Contact form submissions (name, email address, message content) are transmitted directly to the site owner's email inbox via a third-party form service. This data is used solely to respond to your inquiry.</li>
+        <li>No personal data is stored on a server operated by this Site.</li>
+        <li>No user accounts, passwords, or profiles are created or maintained.</li>
+      </ul>
+      <p>
+        You are not required to provide any personal information to browse this Site.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Cookies</h2>
+      <p>
+        This Site does not use first-party cookies for tracking or analytics purposes. However, certain
+        third-party resources embedded in the Site (such as fonts and icon libraries) may set cookies
+        in accordance with their own policies.
+      </p>
+      <p>
+        You can manage or disable cookies through your browser settings at any time. Disabling cookies
+        will not affect your ability to view this Site.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Third-Party Services</h2>
+      <p>This Site loads resources from the following third-party services. Each is governed by its own privacy policy:</p>
+      <ul>
+        <li><strong>Google Fonts</strong> — typography assets served from Google's CDN</li>
+        <li><strong>Font Awesome (Cloudflare CDN)</strong> — icon library assets</li>
+        <li><strong>Unsplash</strong> — project preview images served from Unsplash's CDN</li>
+        <li><strong>Three.js (Cloudflare CDN)</strong> — visual background rendering library</li>
+      </ul>
+      <p>
+        These services may collect standard web request data (IP address, browser user agent, referring URL)
+        as part of normal CDN operations. This Site has no control over that data.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Intellectual Property</h2>
+      <p>
+        All content on this Site — including but not limited to written text, code, design, graphics,
+        project descriptions, and the portfolio structure — is the intellectual property of Harin Joshi
+        unless otherwise stated.
+      </p>
+      <p>
+        You may not reproduce, redistribute, or commercially exploit any portion of this Site without
+        prior written permission from the owner.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Limitation of Liability</h2>
+      <p>
+        This Site is provided on an "as is" basis for informational purposes only. Harin Joshi makes
+        no warranties, express or implied, regarding the accuracy, completeness, or availability of
+        any content on this Site.
+      </p>
+      <p>
+        To the fullest extent permitted by applicable law, Harin Joshi shall not be liable for any
+        direct, indirect, incidental, or consequential damages arising from your use of or inability
+        to use this Site or its content.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Contact</h2>
+      <p>
+        If you have any questions about this Privacy Policy, please reach out via the
+        <a href="index.html#contact" style="color: var(--primary); text-decoration: none;">contact form</a>
+        on the portfolio or email directly at
+        <a href="mailto:harinjoshiofficial@gmail.com" style="color: var(--primary); text-decoration: none;">harinjoshiofficial@gmail.com</a>.
+      </p>
+    </div>
+
+  </main>
+
+  <footer class="page-footer">
+    <p>&copy; 2026 Harin Joshi. All rights reserved. &nbsp;·&nbsp;
+      <a href="privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+      <a href="terms-of-service.html">Terms of Service</a>
+    </p>
+  </footer>
+
+</body>
+</html>

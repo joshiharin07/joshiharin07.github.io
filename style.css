@@ -100,50 +100,102 @@ body:hover .cursor { opacity: 1; }
 .cursor.cursor-hover { width: 20px; height: 20px; background: var(--accent); }
 .cursor-follower.cursor-hover { width: 56px; height: 56px; opacity: 0.3; }
 
-/* ---- LOADER: Car Drive ---- */
-.loader {
+/* ---- LOADER: Cinematic Logo Intro ---- */
+.cl-overlay {
+  display: none;            /* hidden by default — JS/inline script controls visibility */
   position: fixed;
   inset: 0;
-  background: #020010;
+  background: #000;
   z-index: 9999;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
-  transition: opacity 0.55s ease, visibility 0.55s;
+  opacity: 1;
+  transition: opacity 0.55s ease;
 }
-.loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-#carCanvas {
+/* Only render the overlay on genuine first visit (class set in <head> before body paints) */
+html.cl-loading .cl-overlay { display: flex; }
+.cl-overlay.cl-gone { opacity: 0; pointer-events: none; }
+
+.cl-scene {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, opacity;
+}
+
+/* Logo + tracer wrapper */
+.cl-logo-wrap {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+/* Actual logo image */
+.cl-logo {
   position: absolute;
   inset: 0;
-  width: 100%; height: 100%;
-  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  opacity: 0;
+  transform: scale(0.85);
+  animation: clLogoReveal 0.7s cubic-bezier(0.4, 0, 0.2, 1) 0.15s forwards;
 }
-.car-counter {
+
+/* SVG stroke tracer on top of logo */
+.cl-tracer {
   position: absolute;
-  bottom: 44px;
-  right: 52px;
-  z-index: 10;
-  display: flex;
-  align-items: baseline;
-  gap: 3px;
+  inset: -4px;            /* bleed 4px so the stroke isn't clipped at edge */
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
   pointer-events: none;
+  filter:
+    drop-shadow(0 0  6px rgba(6, 182, 212, 0.9))
+    drop-shadow(0 0 14px rgba(168, 85, 247, 0.55));
 }
-#sgPctNum {
-  font-family: var(--font-display);
-  font-size: 5rem;
-  font-weight: 900;
-  letter-spacing: -4px;
-  line-height: 1;
-  background: linear-gradient(135deg, rgba(255,255,255,0.95), #a78bfa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.cl-trace-rect {
+  animation: clTrace 0.95s cubic-bezier(0.4, 0, 0.2, 1) 0.55s forwards;
 }
-.car-pct-sym {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #a78bfa;
-  -webkit-text-fill-color: #a78bfa;
+
+/* Glow pulse on the whole logo frame */
+.cl-logo-wrap.cl-pulse {
+  animation: clGlowPulse 0.75s ease-in-out;
 }
+
+/* Scene exit: zoom forward + fade */
+.cl-scene.cl-exit {
+  animation: clSceneExit 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ---- Keyframes ---- */
+@keyframes clLogoReveal {
+  from { opacity: 0;    transform: scale(0.85); }
+  to   { opacity: 1;    transform: scale(1);    }
+}
+
+@keyframes clTrace {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes clGlowPulse {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0  0px rgba(6, 182, 212, 0))
+      drop-shadow(0 0  0px rgba(168, 85, 247, 0));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 28px rgba(6, 182, 212, 0.9))
+      drop-shadow(0 0 40px rgba(168, 85, 247, 0.65));
+  }
+}
+
+@keyframes clSceneExit {
+  to { transform: scale(1.4); opacity: 0; }
+}
+
 
 /* ---- Container ---- */
 .container {
@@ -301,6 +353,7 @@ body:hover .cursor { opacity: 1; }
   width: 36px;
   height: 36px;
   flex-shrink: 0;
+  object-fit: contain;
   filter: drop-shadow(0 0 8px rgba(6,240,216,0.4));
   transition: filter 0.3s, transform 0.3s;
 }
@@ -1527,6 +1580,80 @@ body:hover .cursor { opacity: 1; }
 }
 .form-success.show { display: flex; animation: fadeIn 0.5s; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ---- Budget Slider ---- */
+.budget-slider-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+}
+.budget-display {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  background: linear-gradient(90deg, #06b6d4, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.budget-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    to right,
+    #06b6d4 0%,
+    #7c3aed var(--pct, 8.2%),
+    rgba(255,255,255,0.12) var(--pct, 8.2%)
+  );
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  border: none !important;
+  padding: 0 !important;
+  transition: box-shadow 0.3s ease;
+}
+.budget-slider:hover {
+  box-shadow: 0 0 10px rgba(6,182,212,0.25);
+}
+.budget-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #06b6d4, #7c3aed);
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(6,182,212,0.18), 0 0 14px rgba(6,182,212,0.55);
+  transition: box-shadow 0.3s, transform 0.2s;
+}
+.budget-slider::-webkit-slider-thumb:hover,
+.budget-slider:active::-webkit-slider-thumb {
+  box-shadow: 0 0 0 5px rgba(6,182,212,0.25), 0 0 22px rgba(6,182,212,0.75);
+  transform: scale(1.18);
+}
+.budget-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #06b6d4, #7c3aed);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 0 3px rgba(6,182,212,0.18), 0 0 14px rgba(6,182,212,0.55);
+}
+.budget-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 2px;
+}
 
 /* ---- FOOTER ---- */
 .footer {

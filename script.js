@@ -639,6 +639,60 @@
 
 
 /* ============================================================
+   1b. CINEMATIC LOGO INTRO LOADER
+============================================================ */
+(function initCinematicLoader() {
+  /* The <head> inline script already hid the overlay for returning visitors.
+     Only proceed if the cl-loading gate is active (genuine first visit). */
+  if (!document.documentElement.classList.contains('cl-loading')) {
+    /* Returning visitor: loader is already hidden — boot page content directly */
+    if (typeof startHeroAnimations === 'function') startHeroAnimations();
+    return;
+  }
+
+  var overlay  = document.getElementById('clOverlay');
+  var scene    = document.getElementById('clScene');
+  var logoWrap = document.getElementById('clLogoWrap');
+  if (!overlay) {
+    if (typeof startHeroAnimations === 'function') startHeroAnimations();
+    return;
+  }
+
+  /* Mark as seen so future visits skip the loader */
+  sessionStorage.setItem('clSeen', '1');
+  document.body.style.overflow = 'hidden';
+
+  /*
+   * Animation timeline (all timings in ms):
+   *  0 – 850ms  : logo fades in + scales from 0.85 → 1   (CSS, delay 150ms)
+   * 550 – 1500ms: stroke traces around the border          (CSS, delay 550ms)
+   * 1500ms      : glow pulse kicks in via JS class
+   * 2200ms      : scene zooms forward, overlay fades out
+   * 2850ms      : overlay removed, scroll restored, hero animations start
+   */
+
+  /* Phase 3: glow pulse — T=1500ms */
+  setTimeout(function () {
+    if (logoWrap) logoWrap.classList.add('cl-pulse');
+  }, 1500);
+
+  /* Phase 4: zoom exit + overlay fade — T=2200ms */
+  setTimeout(function () {
+    if (scene) scene.classList.add('cl-exit');
+    overlay.classList.add('cl-gone');
+  }, 2200);
+
+  /* Phase 5: clean up + boot page — T=2850ms */
+  setTimeout(function () {
+    overlay.style.display = 'none';
+    document.documentElement.classList.remove('cl-loading');
+    document.body.style.overflow = '';
+    if (typeof startHeroAnimations === 'function') startHeroAnimations();
+  }, 2850);
+})();
+
+
+/* ============================================================
    2. THREE.JS PARTICLE BACKGROUND
 ============================================================ */
 (function initThreeJS() {
@@ -1160,6 +1214,37 @@ function startHeroAnimations() {
 
   tlItems.forEach(function (item) { tlItemObs.observe(item); });
 
+})();
+
+/* ============================================================
+   10b. BUDGET SLIDER
+============================================================ */
+(function initBudgetSlider() {
+  var slider  = document.getElementById('budgetSlider');
+  var display = document.getElementById('budgetDisplay');
+  if (!slider || !display) return;
+
+  /* Indian number format: 1,00,000 */
+  function formatINR(n) {
+    var s     = String(n);
+    var last3 = s.slice(-3);
+    var rest  = s.slice(0, -3);
+    if (!rest) return '₹' + last3;
+    rest = rest.replace(/\B(?=(\d{2})+(?!\d))/g, ',');
+    return '₹' + rest + ',' + last3;
+  }
+
+  function update() {
+    var min = Number(slider.min);
+    var max = Number(slider.max);
+    var val = Number(slider.value);
+    var pct = ((val - min) / (max - min) * 100).toFixed(2) + '%';
+    slider.style.setProperty('--pct', pct);
+    display.textContent = 'Selected Budget: ' + formatINR(val);
+  }
+
+  slider.addEventListener('input', update);
+  update(); /* initialise on load */
 })();
 
 /* ============================================================

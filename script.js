@@ -1248,7 +1248,82 @@ function startHeroAnimations() {
 })();
 
 /* ============================================================
-   11. SMOOTH SCROLL  for anchor links
+   11. NEWSLETTER FORM
+============================================================ */
+(function initNewsletterForm() {
+  var form = document.getElementById('newsletterForm');
+  var emailInput = document.getElementById('newsletterEmail');
+  var errorMsg = document.getElementById('newsletterError');
+  var successMsg = document.getElementById('newsletterSuccess');
+
+  if (!form || !emailInput) return;
+
+  function validateEmail(email) {
+    var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  }
+
+  function showError(message) {
+    if (errorMsg) {
+      errorMsg.textContent = message;
+      errorMsg.classList.add('show');
+    }
+    if (successMsg) {
+      successMsg.classList.remove('show');
+    }
+  }
+
+  function showSuccess() {
+    if (successMsg) {
+      successMsg.classList.add('show');
+    }
+    if (errorMsg) {
+      errorMsg.classList.remove('show');
+      errorMsg.textContent = '';
+    }
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var email = emailInput.value.trim();
+
+    /* Validate email */
+    if (!email) {
+      showError('Please enter your email address.');
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      showError('Please enter a valid email address.');
+      return;
+    }
+
+    /* Simulate API call (no backend needed) */
+    var btn = form.querySelector('button[type="submit"]');
+    var originalText = btn.textContent;
+    btn.textContent = 'Subscribing...';
+    btn.disabled = true;
+
+    setTimeout(function () {
+      /* Success! */
+      showSuccess();
+      emailInput.value = '';
+      btn.textContent = originalText;
+      btn.disabled = false;
+
+      /* Hide success message after 4 seconds */
+      setTimeout(function () {
+        if (successMsg) {
+          successMsg.classList.remove('show');
+        }
+      }, 4000);
+    }, 800);
+  });
+})();
+
+/* ============================================================
+   11a. SMOOTH SCROLL  for anchor links
 ============================================================ */
 document.querySelectorAll('a[href^="#"]').forEach(function (a) {
   a.addEventListener('click', function (e) {

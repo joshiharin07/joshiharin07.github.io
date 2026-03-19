@@ -752,10 +752,14 @@
         <div class="footer-newsletter">
           <h4>Stay Updated</h4>
           <p>Subscribe to my newsletter for the latest tech insights.</p>
-          <div class="newsletter-form">
-            <input type="email" placeholder="your@email.com" />
-            <button class="btn btn-primary">Subscribe</button>
-          </div>
+          <form class="newsletter-form" id="newsletterForm">
+            <input type="email" id="newsletterEmail" placeholder="your@email.com" required />
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+            <div class="newsletter-error" id="newsletterError"></div>
+            <div class="newsletter-success" id="newsletterSuccess">
+              <i class="fa-solid fa-check"></i> Subscribed successfully!
+            </div>
+          </form>
         </div>
       </div>
       <div class="footer-bottom">

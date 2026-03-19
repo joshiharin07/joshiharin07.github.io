@@ -1334,3 +1334,171 @@ document.querySelectorAll('a[href^="#"]').forEach(function (a) {
     }
   });
 });
+
+/* ============================================================
+   12. HIRE ME MODAL
+============================================================ */
+(function initHireModal() {
+  var hireMeBtn = document.getElementById('hireMeBtn');
+  var modalOverlay = document.getElementById('hireModalOverlay');
+  var modal = document.getElementById('hireModal');
+  var closeBtn = document.getElementById('hireModalClose');
+  var form = document.getElementById('hireModalForm');
+  var successMsg = document.getElementById('hireFormSuccess');
+  var projectTypeSelect = document.getElementById('hireProjectType');
+  var otherField = document.getElementById('hireOtherField');
+  var otherInput = document.getElementById('hireOtherInput');
+
+  if (!hireMeBtn || !modalOverlay || !modal || !closeBtn || !form) return;
+
+  /* Handle "Other" project type selection */
+  if (projectTypeSelect && otherField && otherInput) {
+    projectTypeSelect.addEventListener('change', function() {
+      if (this.value === 'other') {
+        otherField.classList.add('show');
+        otherInput.setAttribute('required', 'required');
+        /* Smooth scroll animation */
+        setTimeout(function() {
+          otherInput.focus();
+        }, 300);
+      } else {
+        otherField.classList.remove('show');
+        otherInput.removeAttribute('required');
+        otherInput.value = '';
+      }
+    });
+  }
+
+  /* Open Modal */
+  function openModal() {
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  /* Close Modal */
+  function closeModal() {
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    /* Reset form and hide success message after closing */
+    setTimeout(function() {
+      form.reset();
+      if (successMsg) {
+        successMsg.classList.remove('show');
+      }
+      /* Hide "Other" field on close */
+      if (otherField) {
+        otherField.classList.remove('show');
+      }
+      if (otherInput) {
+        otherInput.removeAttribute('required');
+        otherInput.value = '';
+      }
+    }, 400);
+  }
+
+  /* Event Listeners */
+  hireMeBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    openModal();
+  });
+
+  closeBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    closeModal();
+  });
+
+  /* Close on overlay click (outside modal) */
+  modalOverlay.addEventListener('click', function(e) {
+    if (e.target === modalOverlay) {
+      closeModal();
+    }
+  });
+
+  /* Close on Escape key */
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
+      closeModal();
+    }
+  });
+
+  /* Form Submission */
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    /* Get form values */
+    var name = document.getElementById('hireName').value.trim();
+    var email = document.getElementById('hireEmail').value.trim();
+    var projectType = document.getElementById('hireProjectType').value;
+    var projectTypeOther = otherInput ? otherInput.value.trim() : '';
+    var budget = document.getElementById('hireBudget').value;
+    var message = document.getElementById('hireMessage').value.trim();
+
+    /* Basic validation */
+    if (!name || !email || !projectType || !budget || !message) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    /* Validate "Other" field if selected */
+    if (projectType === 'other' && !projectTypeOther) {
+      alert('Please describe your project type.');
+      if (otherInput) otherInput.focus();
+      return;
+    }
+
+    var submitBtn = form.querySelector('button[type="submit"]');
+    var originalHTML = submitBtn.innerHTML;
+
+    /* Disable button and show loading */
+    submitBtn.innerHTML = '<span>Sending...</span><i class="fa-solid fa-spinner fa-spin"></i>';
+    submitBtn.disabled = true;
+
+    /* Simulate API call (replace with actual endpoint) */
+    setTimeout(function() {
+      /* Success */
+      submitBtn.innerHTML = originalHTML;
+      submitBtn.disabled = false;
+
+      /* Show success message */
+      if (successMsg) {
+        successMsg.classList.add('show');
+      }
+
+      /* Prepare final project type value */
+      var finalProjectType = projectType === 'other' ? projectTypeOther : projectType;
+
+      /* Log the data (in production, send to backend) */
+      console.log('Hire Request:', {
+        name: name,
+        email: email,
+        projectType: finalProjectType,
+        projectTypeCategory: projectType,
+        budget: budget,
+        message: message,
+        timestamp: new Date().toISOString()
+      });
+
+      /* Reset form after 2 seconds */
+      setTimeout(function() {
+        form.reset();
+        if (otherField) {
+          otherField.classList.remove('show');
+        }
+        if (otherInput) {
+          otherInput.removeAttribute('required');
+        }
+      }, 2000);
+
+      /* Auto-close modal after 4 seconds */
+      setTimeout(function() {
+        closeModal();
+      }, 4000);
+
+    }, 1500);
+  });
+
+  /* Prevent modal content clicks from closing */
+  modal.addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+})();

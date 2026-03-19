@@ -43,7 +43,10 @@
 
 /* ---- Reset & Base ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
 body {
   font-family: var(--font-main);
   background: var(--bg);
@@ -51,6 +54,7 @@ body {
   overflow-x: hidden;
   line-height: 1.6;
   cursor: none;
+  max-width: 100vw;
 }
 a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
@@ -1547,20 +1551,29 @@ html.cl-loading .cl-overlay { display: flex; }
 .form-group input,
 .form-group select,
 .form-group textarea {
-  background: rgba(255,255,255,0.05);
+  background: #0f172a;
   border: 1px solid rgba(255,255,255,0.1);
   border-radius: var(--radius-sm);
   padding: 12px 16px;
   color: var(--text);
   font-size: 0.9rem;
-  transition: var(--transition);
+  transition: all 0.2s ease;
+}
+.form-group input:hover,
+.form-group select:hover,
+.form-group textarea:hover {
+  border-color: rgba(255,255,255,0.15);
 }
 .form-group input:focus,
+.form-group input:active,
 .form-group select:focus,
-.form-group textarea:focus {
-  border-color: var(--primary);
-  background: rgba(124,58,237,0.07);
-  box-shadow: 0 0 0 3px rgba(124,58,237,0.15);
+.form-group select:active,
+.form-group textarea:focus,
+.form-group textarea:active {
+  background: #0f172a;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124,58,237,0.2);
+  outline: none;
 }
 .form-group input::placeholder,
 .form-group textarea::placeholder { color: var(--text-dim); }
@@ -1896,6 +1909,535 @@ html.cl-loading .cl-overlay { display: flex; }
   50% { border-color: rgba(6,182,212,0.5); box-shadow: 0 0 20px rgba(6,182,212,0.2); }
 }
 .hero-card-3d .card-inner { animation: neonBorder 4s ease-in-out infinite; }
+
+/* ============================================
+   HIRE ME MODAL
+============================================ */
+
+/* Overlay */
+.hire-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 8, 22, 0.75);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 20px;
+  overflow-y: auto;
+  /* Ensure flexbox centering works with scrolling */
+  min-height: 100vh;
+  /* Override custom cursor for entire modal */
+  cursor: auto !important;
+}
+
+.hire-modal-overlay * {
+  cursor: auto !important;
+}
+
+.hire-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Modal Container - Glassmorphism */
+.hire-modal {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(24px);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  padding: 48px 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5),
+              0 0 80px rgba(124, 58, 237, 0.15),
+              0 0 40px rgba(6, 182, 212, 0.1);
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: auto;
+  /* Ensure modal stays within viewport */
+  flex-shrink: 0;
+  pointer-events: auto;
+  /* Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Hide scrollbar for Webkit browsers */
+.hire-modal::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+
+.hire-modal-overlay.active .hire-modal {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Gradient Glow Effect */
+.hire-modal::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg,
+    rgba(124, 58, 237, 0.4) 0%,
+    rgba(6, 182, 212, 0.4) 50%,
+    rgba(168, 85, 247, 0.4) 100%);
+  border-radius: var(--radius-lg);
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(20px);
+}
+
+.hire-modal::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg,
+    rgba(124, 58, 237, 0.05) 0%,
+    transparent 50%,
+    rgba(6, 182, 212, 0.05) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure all modal children show proper cursor */
+.hire-modal,
+.hire-modal * {
+  cursor: auto !important;
+}
+
+.hire-modal input[type="text"],
+.hire-modal input[type="email"],
+.hire-modal textarea {
+  cursor: text !important;
+}
+
+.hire-modal button,
+.hire-modal select {
+  cursor: pointer !important;
+}
+
+.hire-modal label {
+  cursor: default !important;
+}
+
+/* Close Button */
+.hire-modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-sm);
+  color: #ef4444;
+  font-size: 1.25rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  cursor: pointer !important;
+  flex-shrink: 0;
+}
+
+.hire-modal-close:hover {
+  cursor: pointer !important;
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.hire-modal-close i {
+  cursor: pointer !important;
+  pointer-events: none;
+}
+
+.hire-modal-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+/* Modal Header */
+.hire-modal-header {
+  text-align: center;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
+  padding: 0 60px 0 0;
+}
+
+.hire-modal-header h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.hire-modal-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Form */
+.hire-modal-form {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Override custom cursor for form elements */
+.hire-modal-form input,
+.hire-modal-form select,
+.hire-modal-form textarea,
+.hire-modal-form button {
+  cursor: auto !important;
+}
+
+.hire-modal-form input[type="text"],
+.hire-modal-form input[type="email"],
+.hire-modal-form textarea {
+  cursor: text !important;
+}
+
+.hire-modal-form select {
+  cursor: pointer !important;
+}
+
+.hire-modal-form button {
+  cursor: pointer !important;
+}
+
+.hire-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hire-form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hire-form-group label .required {
+  color: #ef4444;
+}
+
+.hire-form-group input,
+.hire-form-group select,
+.hire-form-group textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: #0f172a;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: var(--font-main);
+  transition: all 0.2s ease;
+  outline: none;
+  cursor: text !important;
+}
+
+.hire-form-group input[type="text"],
+.hire-form-group input[type="email"],
+.hire-form-group textarea {
+  cursor: text !important;
+}
+
+.hire-form-group input::placeholder,
+.hire-form-group textarea::placeholder {
+  color: var(--text-dim);
+}
+
+.hire-form-group input:hover,
+.hire-form-group select:hover,
+.hire-form-group textarea:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.hire-form-group input:focus,
+.hire-form-group input:active,
+.hire-form-group select:focus,
+.hire-form-group select:active,
+.hire-form-group textarea:focus,
+.hire-form-group textarea:active {
+  background: #0f172a;
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124,58,237,0.2);
+}
+
+.hire-form-group select {
+  cursor: pointer !important;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  padding-right: 44px;
+  position: relative;
+  z-index: 10;
+}
+
+.hire-form-group select option {
+  background: #0f172a;
+  color: var(--text);
+  padding: 12px;
+  cursor: pointer !important;
+}
+
+.hire-form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+/* Dynamic "Other" Input Field */
+.hire-other-field {
+  display: none;
+  margin-top: -8px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hire-other-field.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hire-other-field input {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: var(--font-main);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  cursor: text !important;
+}
+
+.hire-other-field input::placeholder {
+  color: var(--text-dim);
+}
+
+.hire-other-field input:focus {
+  border-color: rgba(6, 182, 212, 0.6);
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1),
+              0 0 20px rgba(6, 182, 212, 0.15);
+}
+
+/* Submit Button */
+.hire-submit-btn {
+  width: 100%;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #7c3aed 0%, #06b6d4 100%);
+  border: none;
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 8px;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.hire-submit-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #06b6d4 0%, #7c3aed 100%);
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hire-submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.4),
+              0 0 40px rgba(6, 182, 212, 0.2);
+  cursor: pointer !important;
+}
+
+.hire-submit-btn:hover::before {
+  opacity: 1;
+}
+
+.hire-submit-btn:active {
+  transform: translateY(0);
+}
+
+.hire-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed !important;
+  transform: none;
+}
+
+.hire-submit-btn span,
+.hire-submit-btn i {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+  cursor: pointer !important;
+}
+
+/* Success Message */
+.hire-form-success {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 20px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-sm);
+  color: #10b981;
+  font-size: 0.95rem;
+  margin-top: 8px;
+  animation: slideInUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hire-form-success.show {
+  display: flex;
+}
+
+.hire-form-success i {
+  font-size: 1.25rem;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive - Tablet */
+@media (max-width: 768px) {
+  .hire-modal {
+    max-width: 95%;
+    padding: 40px 32px;
+  }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .hire-modal-overlay {
+    padding: 16px;
+  }
+
+  .hire-modal {
+    padding: 36px 24px;
+    max-width: 100%;
+    max-height: 92vh;
+    margin: 0;
+  }
+
+  .hire-modal-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .hire-modal-header p {
+    font-size: 0.875rem;
+  }
+
+  .hire-modal-header {
+    padding: 0 50px 0 0;
+  }
+
+  .hire-form-group input,
+  .hire-form-group select,
+  .hire-form-group textarea {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .hire-submit-btn {
+    padding: 14px 28px;
+    font-size: 0.95rem;
+  }
+
+  .hire-modal-close {
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
+  }
+
+  .hire-other-field input {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hire-modal-overlay {
+    padding: 12px;
+  }
+
+  .hire-modal {
+    padding: 28px 20px;
+    max-height: 94vh;
+  }
+
+  .hire-modal-header h2 {
+    font-size: 1.35rem;
+  }
+
+  .hire-modal-header {
+    padding: 0 46px 0 0;
+  }
+}
 
 /* ============================================================
    PREMIUM SKILLS SECTION ANIMATIONS
